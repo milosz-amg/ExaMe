@@ -73,17 +73,20 @@ def read_image(image_path):
         time.sleep(10)
 
     #text printer (will change later to interact with it)
-    text = ''
+    text = []
     if read_result.status == "succeeded":
         for text_result in read_result.analyze_result.read_results:
             for line in text_result.lines:
-                text += line.text + '\n'
+                text.append(line.text)
 
-    print(text)
+    # print(text)
     return(text)
 
-text_blank = read_txt_to_string("blank_to_text.txt")
-text_quiz_solved = read_txt_to_string("answer_to_text.txt")
+# text_blank = read_txt_to_string("blank_to_text.txt")
+# text_quiz_solved = read_txt_to_string("answer_to_text.txt")
+
+text_blank= read_image("images/quiz_empty.png")
+text_quiz_solved = read_image("images/quiz.jpg")
 answers_handwritten=[]
 questions_lines=[]
 
@@ -132,5 +135,8 @@ ouput_string=""
 for i in range(n):
     ouput_string+="Q"+str(i+1)+":\n"+questions[i]+"\nA"+str(i+1)+":\n"+answers[i]+"\n"
 
-print(ouput_string)
+# print(text_blank)
+# print(text_quiz_solved)
+# print(ouput_string)
+
 create_pdf(ouput_string,OUTPUT_FILE)
