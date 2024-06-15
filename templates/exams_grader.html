@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Exams Grader</title>
+</head>
+<body>
+    <h1>Exams Grader</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <h2>Upload Teacher Images:</h2>
+        <input type="file" name="teacher_images" multiple>
+
+        <div id="studentImages">
+            <h2>Upload Student Images:</h2>
+            <input type="file" name="student_images" multiple>
+            <button type="submit">ANALYZE</button>
+        </div>
+    </form>
+    <br>
+    <!-- Button to add more student image upload fields -->
+    <button type="button" onclick="addStudentImageField()">Add New Student</button>
+
+    <script>
+        function addStudentImageField() {
+            var container = document.getElementById('studentImages');
+            var newContainer = document.createElement('div');
+            newContainer.id = "newStudentImages";
+            var new_title = document.createElement('h2');
+            newContainer.appendChild(new_title)
+            var newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.name = 'student_images';
+            newInput.multiple = true;
+            newContainer.appendChild(newInput);
+            var newButton = document.createElement('button');
+            newButton.type = 'submit';
+            newButton.textContent = 'ANALYZE';
+            newContainer.appendChild(newButton);
+            container.appendChild(newContainer);
+        }
+    </script>
+</body>
+</html>
