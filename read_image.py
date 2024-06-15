@@ -8,9 +8,16 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Frame, PageBreak
 
+import fitz  # PyMuPDF
+from PIL import Image
+import io
+import os
+
 BLNK_QUIZ = "images/blank_quiz.jpg"
 ANSWERED_QUIZ = "images/quiz.jpg"
 OUTPUT_FILE="output.pdf"
+CLEAR_EXAM_FOLDER="./images/clear_exam"
+ANSWERED_EXAM_FOLDER="./images/exam_with_answers"
 
 def write_string_to_txt(file_path, text):
     with open(file_path, 'w') as file:
@@ -24,6 +31,34 @@ def read_txt_to_string(file_path):
 
 def remove_empty_strings(items):
     return [item for item in items if item]
+
+
+def pdf_to_images(pdf_path, output_folder):
+    # Open the PDF file
+    pdf_document = fitz.open(pdf_path)
+    num_pages = pdf_document.page_count
+
+    # Ensure the output folder exists
+    os.makedirs(output_folder, exist_ok=True)
+
+    image_paths = []
+
+    for page_number in range(num_pages):
+        # Select the page
+        page = pdf_document.load_page(page_number)
+
+        # Render the page to a pixel map
+        pix = page.get_pixmap()
+
+        # Convert the pixel map to a PIL Image
+        image = Image.open(io.BytesIO(pix.tobytes("png")))
+
+        # Save the image
+        image_path = os.path.join(output_folder, f"page_{page_number + 1}.png")
+        image.save(image_path)
+        image_paths.append(image_path)
+
+    return image_paths
 
 def create_pdf(input_text, output_pdf_file):
     # Create a SimpleDocTemplate object
@@ -47,6 +82,8 @@ def create_pdf(input_text, output_pdf_file):
     
     # Build the PDF
     doc.build(story)
+
+
 
 def read_image(image_path):
     subscription_key = "7370e520ed3547a6b7d1d7a555c2ec12"
@@ -82,11 +119,26 @@ def read_image(image_path):
     # print(text)
     return(text)
 
+
+
+# MAIN
+
 # text_blank = read_txt_to_string("blank_to_text.txt")
 # text_quiz_solved = read_txt_to_string("answer_to_text.txt")
 
-text_blank= read_image("images/quiz_empty.png")
-text_quiz_solved = read_image("images/quiz.jpg")
+exam_questions_only_list=pdf_to_images("./images/exam_questions_only.pdf", CLEAR_EXAM_FOLDER)
+exam_questions_with_answers_list=pdf_to_images("./images/exam_questions_with_answers.pdf", ANSWERED_EXAM_FOLDER)
+
+text_blank=[]
+for page in exam_questions_only_list:
+    text_blank += read_image(page)
+
+text_quiz_solved=[]
+for page in exam_questions_with_answers_list:
+    text_quiz_solved += read_image(page)
+
+# text_blank= read_image("images/quiz_empty.png")
+# text_quiz_solved = read_image("images/quiz.jpg")
 answers_handwritten=[]
 questions_lines=[]
 
