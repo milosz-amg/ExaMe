@@ -125,70 +125,71 @@ def read_image(image_path):
 
 # text_blank = read_txt_to_string("blank_to_text.txt")
 # text_quiz_solved = read_txt_to_string("answer_to_text.txt")
+def seperate(path_to_empty, path_to_solved):
+    exam_questions_only_list=pdf_to_images(path_to_empty, CLEAR_EXAM_FOLDER)
+    exam_questions_with_answers_list=pdf_to_images(path_to_solved, ANSWERED_EXAM_FOLDER)
 
-exam_questions_only_list=pdf_to_images("./images/exam_questions_only.pdf", CLEAR_EXAM_FOLDER)
-exam_questions_with_answers_list=pdf_to_images("./images/exam_questions_with_answers.pdf", ANSWERED_EXAM_FOLDER)
+    text_blank=[]
+    for page in exam_questions_only_list:
+        text_blank += read_image(page)
 
-text_blank=[]
-for page in exam_questions_only_list:
-    text_blank += read_image(page)
+    text_quiz_solved=[]
+    for page in exam_questions_with_answers_list:
+        text_quiz_solved += read_image(page)
 
-text_quiz_solved=[]
-for page in exam_questions_with_answers_list:
-    text_quiz_solved += read_image(page)
+    # text_blank= read_image("images/quiz_empty.png")
+    # text_quiz_solved = read_image("images/quiz.jpg")
+    answers_handwritten=[]
+    questions_lines=[]
 
-# text_blank= read_image("images/quiz_empty.png")
-# text_quiz_solved = read_image("images/quiz.jpg")
-answers_handwritten=[]
-questions_lines=[]
+    for line in text_quiz_solved:
+        if line not in text_blank:
+            answers_handwritten.append(line.strip())
 
-for line in text_quiz_solved:
-    if line not in text_blank:
-        answers_handwritten.append(line.strip())
+    for line in text_blank:
+        if line not in answers_handwritten:
+            questions_lines.append(line.strip())
 
-for line in text_blank:
-    if line not in answers_handwritten:
-        questions_lines.append(line.strip())
+    single_question=""
+    single_answer=""
+    questions=[]
+    answers=[]
 
-single_question=""
-single_answer=""
-questions=[]
-answers=[]
+    text_quiz_solved_cp = text_quiz_solved.copy()
+    while text_quiz_solved_cp:
+        line = text_quiz_solved_cp.pop(0)
+        line = line.strip()
+        if line not in answers_handwritten:
+            single_question+=line
+        else:
+            questions.append(single_question)
+            single_question=""
+    questions.append(single_question)
+    questions = remove_empty_strings(questions)
 
-text_quiz_solved_cp = text_quiz_solved.copy()
-while text_quiz_solved_cp:
-    line = text_quiz_solved_cp.pop(0)
-    line = line.strip()
-    if line not in answers_handwritten:
-        single_question+=line
-    else:
-        questions.append(single_question)
-        single_question=""
-questions.append(single_question)
-questions = remove_empty_strings(questions)
+    text_quiz_solved_cp.clear()
+    text_quiz_solved_cp = text_quiz_solved.copy()
 
-text_quiz_solved_cp.clear()
-text_quiz_solved_cp = text_quiz_solved.copy()
-
-while text_quiz_solved_cp:
-    line = text_quiz_solved_cp.pop(0)
-    line = line.strip()
-    if line not in questions_lines:
-        single_answer+=line
-    else:
-        answers.append(single_answer)
-        single_answer=""
-answers.append(single_answer)
-answers = remove_empty_strings(answers)
+    while text_quiz_solved_cp:
+        line = text_quiz_solved_cp.pop(0)
+        line = line.strip()
+        if line not in questions_lines:
+            single_answer+=line
+        else:
+            answers.append(single_answer)
+            single_answer=""
+    answers.append(single_answer)
+    answers = remove_empty_strings(answers)
 
 
-n = len(questions)
-ouput_string=""
-for i in range(n):
-    ouput_string+="Q"+str(i+1)+":\n"+questions[i]+"\nA"+str(i+1)+":\n"+answers[i]+"\n"
+    n = len(questions)
+    ouput_string=""
+    for i in range(n):
+        ouput_string+="Q"+str(i+1)+":\n"+questions[i]+"\nA"+str(i+1)+":\n"+answers[i]+"\n"
 
-# print(text_blank)
-# print(text_quiz_solved)
-# print(ouput_string)
+    # print(text_blank)
+    # print(text_quiz_solved)
+    # print(ouput_string)
 
-create_pdf(ouput_string,OUTPUT_FILE)
+    # create_pdf(ouput_string,OUTPUT_FILE)
+    return questions, answers
