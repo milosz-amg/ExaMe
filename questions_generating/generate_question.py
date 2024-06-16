@@ -1,5 +1,5 @@
 from openai import OpenAI
-from functions_to_generate_pdf import *
+from questions_generating.functions_to_generate_pdf import *
 
 def generate_questions_answers(pdf_text):
     client = OpenAI(

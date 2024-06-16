@@ -1,1 +1,4 @@
 \venv
+*.pdf
+\\*.pdf
+\__pycache

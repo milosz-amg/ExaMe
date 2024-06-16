@@ -1,41 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exams Grader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282828; /* Dark mode background color */
+            color: #fff; /* Dark mode text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #333; /* Darker background for container */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            border: 2px solid green;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .file-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        /* Hide the default file input */
+        input[type="file"] {
+            display: none;
+        }
+        /* Style for the custom file upload button */
+        .file-upload,
+        .file-upload-label,
+        button {
+            color: #fff;
+            border: none;
+            padding: 12px 24px; /* Adjust padding to desired size */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+            display: inline-block;
+            background-color: #555;
+        }
+        .file-upload-label,
+        button {
+            padding: 12px 24px; /* Adjust padding to desired size */
+        }
+        .file-upload {
+            background-color: #007bff; /* Blue button color */
+        }
+        .file-upload:hover,
+        .file-upload-label:hover {
+            background-color: #218838; /* Darker blue on hover */
+        }
+        .add-student-button {
+            background-color: #28a745; /* Green button color */
+        }
+        .add-student-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        /* Specific color adjustments */
+        .file-upload.light-grey {
+            background-color: green; /* Light grey for blue buttons */
+            color: white; /* Darker text for contrast */
+        }
+        .add-student-button.dark-grey {
+            background-color: #555; /* Dark grey for green button */
+            color: #fff; /* White text for contrast */
+        }
+        .button-container {
+            background-color: green;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            
+            /* Ensure it appears above the background */
+        }
+    </style>
 </head>
 <body>
-    <h1>Exams Grader</h1>
-    <form action="" method="post" enctype="multipart/form-data">
-        <h2>Upload Teacher Images:</h2>
-        <input type="file" name="teacher_images" multiple>
+    <div class="container">
+        <button class="button-container" onclick="goBackHome()">Go Back Home</button>
 
-        <div id="studentImages">
-            <h2>Upload Student Images:</h2>
-            <input type="file" name="student_images" multiple>
-            <button type="submit">ANALYZE</button>
-        </div>
-    </form>
-    <br>
-    <!-- Button to add more student image upload fields -->
-    <button type="button" onclick="addStudentImageField()">Add New Student</button>
+        <h1><span style="color: green;">Exams Grader</h1>
+        <form action="/exams-grader" method="post" enctype="multipart/form-data">
+            <h2><span style="color: green;">Upload Empty Exam:</h2>
+                <!-- Custom styled label for teacher images -->
+                <label class="file-upload-label" for="empty_exam">Choose file</label>
+                <input id="empty_exam" type="file" name="empty_exam">
+
+            <h2><span style="color: green;">Upload Exam filled by Teacher:</h2>
+            <!-- Custom styled label for teacher images -->
+            <label class="file-upload-label" for="teacher_images">Choose file</label>
+            <input id="teacher_images" type="file" name="teacher_images">
+            
+            <div id="studentImages">
+                <h2><span style="color: green;">Upload Exam filled by Student:</h2>
+                <!-- Custom styled label for student images -->
+                <label class="file-upload-label" for="student_images">Choose files</label>
+                <input id="student_images" type="file" name="student_images">
+                <button type="submit" class="file-upload light-grey">ANALYZE</button>
+            </div>
+        </form>
+        
+    </div>
 
     <script>
-        function addStudentImageField() {
-            var container = document.getElementById('studentImages');
-            var newContainer = document.createElement('div');
-            newContainer.id = "newStudentImages";
-            var new_title = document.createElement('h2');
-            newContainer.appendChild(new_title)
-            var newInput = document.createElement('input');
-            newInput.type = 'file';
-            newInput.name = 'student_images';
-            newInput.multiple = true;
-            newContainer.appendChild(newInput);
-            var newButton = document.createElement('button');
-            newButton.type = 'submit';
-            newButton.textContent = 'ANALYZE';
-            newContainer.appendChild(newButton);
-            container.appendChild(newContainer);
+        function goBackHome() {
+            window.location.href = 'http://127.0.0.1:5000/';
         }
     </script>
 </body>

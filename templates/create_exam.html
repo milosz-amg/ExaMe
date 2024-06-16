@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Create Exam</title>
@@ -15,5 +15,158 @@
         <input type="file" name="answers" multiple>
         <button type="submit">ANALYZE</button>
     </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Exam</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282828; /* Dark mode background color */
+            color: #fff; /* Dark mode text color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #333; /* Darker background for container */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            border: 2px solid green; /* Ensure relative positioning for absolute elements */
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #28a745; /* Green color for ExamMe */
+        }
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .file-label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        /* Hide the default file input */
+        input[type="file"] {
+            display: none;
+        }
+        /* Style for the custom file upload button */
+        .file-upload {
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            background-color: #28a745; /* Green button color */
+        }
+        .file-upload-label {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Remove underline */
+            background-color: #555; /* Dark grey for default */
+            color: #fff;
+        }
+        .file-upload-label:hover {
+            background-color: #28a745; /* Green color on hover */
+        }
+        .file-upload.light-grey {
+            background-color: green; /* Light grey for blue buttons */
+            color: white; /* Darker text for contrast */
+        }
+        .file-upload.light-grey:hover {
+            background-color: #218838; /* Lighter grey on hover */
+        }
+        .file-upload.dark-grey {
+            background-color: #555; /* Dark grey for green button */
+            color: #fff; /* White text for contrast */
+        }
+        .file-upload.dark-grey:hover {
+            background-color: green; /* Darker grey on hover */
+        }
+        .add-student-button {
+            background-color: #28a745; /* Green button color */
+            margin-top: 20px;
+            color: #fff; /* White text */
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .add-student-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        .button-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1; /* Ensure it appears above the background */
+        }
+        .button-container button {
+            background-color: green; /* Dark grey for "Go Back Home" button */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button-container button:hover {
+            background-color: #218838; /* Darker grey on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button onclick="goBackHome()">Go Back Home</button>
+        </div>
+        <h2><span style="color: green;">Create Exam</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            <label for="exam_pdf" class="file-label">Add PDF:</label>
+            <!-- Hidden default file input -->
+            <input id="exam_pdf" type="file" name="exam_pdf" style="display: none;">
+            <!-- Custom styled button that triggers the file input -->
+            <label class="file-upload-label light-grey" for="exam_pdf">Choose file</label>
+            <button type="submit" class="file-upload light-grey">Create Exam</button>
+        </form>
+        <h2><span style="color: green;">Load Your Answers:</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            <label for="answers" class="file-label">Load Your Answers:</label>
+            <!-- Hidden default file input -->
+            <input id="answers" type="file" name="answers" multiple style="display: none;">
+            <!-- Custom styled button that triggers the file input -->
+            <label class="file-upload-label light-grey" for="answers">Choose files</label>
+            <button type="submit" class="file-upload light-grey">ANALYZE</button>
+        </form>
+    </div>
+
+    <script>
+        function goBackHome() {
+            window.location.href = 'http://127.0.0.1:5000/';
+        }
+    </script>
 </body>
 </html>

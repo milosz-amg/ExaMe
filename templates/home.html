@@ -1,11 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #282828; /* Default background color for dark mode */
+            color: #fff; /* Default text color for dark mode */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            background-color: #333; /* Background color for container in dark mode */
+            border: 2px solid green; /* Green border around the container */
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            color: green; /* Text color for h1 */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button {
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            background-color: green; /* Button background color */
+            color: #fff; /* Button text color */
+        }
+
+        button:hover {
+            background-color: #005900; /* Darker green on hover */
+        }
+
+        /* Toggle button */
+        .toggle-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            z-index: 1000;
+        }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Exam Platform</h1>
-    <a href="/exams-grader"><button>Exams Grader</button></a>
-    <a href="/create-exam"><button>Create Exam</button></a>
+    <div class="container">
+        <h1>Welcome to the <span style="color: green;">ExaMe</span> Platform</h1>
+        <div class="button-container">
+            <a href="/exams-grader"><button>Exams Grader</button></a>
+            <a href="/create-exam"><button>Create Exam</button></a>
+        </div>
+    </div>
+
+    <!-- JavaScript for theme toggle (no longer needed since we're only using dark mode) -->
 </body>
 </html>
